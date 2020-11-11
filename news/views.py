@@ -16,11 +16,13 @@ def convert_dates(dates):
     day=days[day_number]
     return day
 
+def article(request, article_id):
+    try:
+        article=Article.objects.get(id=article_id)
+    except DoesNotExist:
+        raise Http404()
 
-def news_of_day(request):
-    date=dt.date.today()
-    day=convert_dates(date)
-    return render(request, 'all-news/today-news.html', {"date": date,})
+    return render(request, "all-news/article.html", {"article":article})
 
 def past_days_news(request, past_date):
     try:
